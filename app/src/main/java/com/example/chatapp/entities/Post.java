@@ -16,6 +16,13 @@ public class Post {
     private String nickName;
     private String image;
 
+    public Post(int id, String userName, String password, String nickName, String image) {
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
+        this.nickName = nickName;
+        this.image = image;
+    }
 
     public String getImage() {
         return image;
