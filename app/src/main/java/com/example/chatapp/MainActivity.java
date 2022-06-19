@@ -1,6 +1,7 @@
 package com.example.chatapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,17 +11,23 @@ import android.widget.Button;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.example.chatapp.entities.Post;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    private AppDB db;
+    private PostDao postDao;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(MainActivity.this, instanceIdResult -> {
-            String newToken = instanceIdResult.getToken();
-        });
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "PostsDB")
+                .allowMainThreadQueries().build();
+        postDao = db.postDao();
 
         Button login = findViewById(R.id.login);
         Button register = findViewById(R.id.register);
