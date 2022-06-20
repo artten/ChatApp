@@ -1,46 +1,73 @@
 package com.example.chatapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
-import com.google.android.gms.common.api.Response;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.List;
+import com.example.chatapp.entities.Contact;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LoginAPI {
+public class LoginAPI extends AppCompatActivity {
 
     Retrofit retrofit;
     WebServiceAPI webServiceAPI;
-
-    public  LoginAPI() {
-
+    private Context context;
+    public  LoginAPI(Context context) {
+        this.context = context;
         retrofit = new Retrofit.Builder()
-                .baseUrl(MyApp.context.getString(Integer.parseInt("http://IP:5263/api/Login/e/e")))
+                .baseUrl(MyApp.context.getString(R.string.BaseURL))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
 
+
     }
 
-    public void get() {
-        Call<String> call = webServiceAPI.getLogin();
-        call.enqueue(new Callback<String>() {
+    public int getLogin(String id, String password) {
+        Call<Object> call = webServiceAPI.getLogin(id, password);
+        final int[] ret = {0,0};
+        call.enqueue(new Callback<Object>() {
 
                          @Override
-                         public void onResponse(Call<String> call, retrofit2.Response<String> response) {
-                             response.body();
-                             Log.d("Hello ", "onResponse: " + response.body());
+                         public void onResponse(Call<Object> call, Response<Object> response) {
+                             if(response.code() == 200) {
+                                 ret[0] = 1;
+
+                                 Intent intent = new Intent(context.getApplicationContext(), ChatContacts.class);
+                                 context.startActivity(intent);
+
+                             }
+                             else{
+                                 ret[0] = 0;
+                             }
+                             Log.d("Hello ", "onResponse: " +  ret[0]);
+                             ret[1] = 1;
+
                          }
 
                          @Override
-                         public void onFailure(Call<String> call, Throwable t) {
-
+                         public void onFailure(Call<Object> call, Throwable t) {
+                             Log.d("Hello ", "onFailure " + t);
+                             ret[0] = 0;
+                             ret[1] = 1;
                          }
         }
         );
+
+//        while(true){
+//            if (ret[1] == 1) {
+//                Log.d("Hello ", "too: " +  ret[0]);
+//                return ret[0];
+//            }
+//        }
+        return ret[0];
+
     }
 }
