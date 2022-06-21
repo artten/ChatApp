@@ -35,7 +35,7 @@ public class RegisterAPI extends AppCompatActivity {
 
                          @Override
                          public void onResponse(Call<Object> call, Response<Object> response) {
-                             if(response.code() == 201) {
+                             if(response.code() == 200) {
                                  ret[0] = 1;
 
                                  Intent intent = new Intent(context.getApplicationContext(), ChatContacts.class);
