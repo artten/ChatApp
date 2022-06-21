@@ -1,8 +1,10 @@
 package com.example.chatapp;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +22,7 @@ public class Register extends AppCompatActivity {
 
     private AppDB db;
     private PostDao postDao;
-
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +34,24 @@ public class Register extends AppCompatActivity {
         postDao = db.postDao();
 
         Button register = findViewById(R.id.reg);
-        EditText userName = findViewById(R.id.editTextTextPersonName2);
-        EditText nickName = findViewById(R.id.editTextTextPersonName3);
-        EditText password = findViewById(R.id.editTextTextPassword2);
-        EditText retPass = findViewById(R.id.editTextTextPassword3);
+        EditText userName = findViewById(R.id.regId);
+        EditText nickName = findViewById(R.id.regNickname);
+        EditText password = findViewById(R.id.regPassword);
+        EditText retPass = findViewById(R.id.regPasswordRe);
+        Button reg = findViewById(R.id.reg); // this is register button in register page.
+        context = this;
+        reg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RegisterAPI registerAPI = new RegisterAPI(context);
+                int ret2 = registerAPI.postRegister(userName.getText().toString(),
+                        password.getText().toString(), nickName.getText().toString());
 
+                Log.d("lols", "ret = " + ret2);
+                //Intent intent = new Intent(getApplicationContext(), ChatContacts.class);
+                //startActivity(intent);
+            }
+        });
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
