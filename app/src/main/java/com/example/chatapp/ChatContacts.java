@@ -1,5 +1,7 @@
 package com.example.chatapp;
 
+import static com.example.chatapp.MyApp.context;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +27,7 @@ public class ChatContacts extends AppCompatActivity {
 
     private  JSONArray str;
     private String UserID;
+    private String value;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,7 @@ public class ChatContacts extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            String value = extras.getString("User");
+           value = extras.getString("User");
             try {
                 JSONObject obj = new JSONObject(value);
                 str =  obj.getJSONArray("contacts");
@@ -75,7 +78,12 @@ public class ChatContacts extends AppCompatActivity {
         listener = new ContactsListAdapter.RecyclerViewListener() {
             @Override
             public void onClick(View v, int position) {
-                Log.d("here", ""+position);
+                MessagesAPI messagesAPI = new MessagesAPI(context);
+                try {
+                    messagesAPI.getMessages(UserID, str.getJSONObject(position).getString("id").toString(), value);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 //Intent intent = new Intent(getApplicationContext() , MainActivity.class);
                 //intent.putextra
                 //startActivity(intent);
