@@ -30,7 +30,7 @@ public class LoginAPI extends AppCompatActivity {
 
     }
 
-    public int getLogin(String id, String password) {
+    public void getLogin(String id, String password) {
         Call<Object> call = webServiceAPI.getLogin(id, password);
         final int[] ret = {0,0};
         call.enqueue(new Callback<Object>() {
@@ -38,36 +38,23 @@ public class LoginAPI extends AppCompatActivity {
                          @Override
                          public void onResponse(Call<Object> call, Response<Object> response) {
                              if(response.code() == 200) {
-                                 ret[0] = 1;
 
                                  Intent intent = new Intent(context.getApplicationContext(), ChatContacts.class);
+                                 //intent.putExtra("User", response.body().toString());
+                                 intent.putExtra("User", "{\"id\":\"e\", \"password\":\"e\",\"contacts\":[{\"id\":\"1\",\"name\":\"1Name\"},{\"id\":\"2\",\"name\":\"2name\"}]}");
+                                 //intent.putExtra("User", "{\"foos\" : [{\"prop1\":\"value1\",\"prop2\":\"value2\"}, {\"prop1\":\"value3\",\"prop2\":\"value4\"}]}"
                                  context.startActivity(intent);
 
                              }
-                             else{
-                                 ret[0] = 0;
-                             }
-                             Log.d("Hello ", "onResponse: " +  ret[0]);
-                             ret[1] = 1;
 
                          }
 
                          @Override
                          public void onFailure(Call<Object> call, Throwable t) {
-                             Log.d("Hello ", "onFailure " + t);
-                             ret[0] = 0;
-                             ret[1] = 1;
                          }
         }
         );
 
-//        while(true){
-//            if (ret[1] == 1) {
-//                Log.d("Hello ", "too: " +  ret[0]);
-//                return ret[0];
-//            }
-//        }
-        return ret[0];
 
     }
 }

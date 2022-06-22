@@ -20,11 +20,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class ChatContacts extends AppCompatActivity {
+public class ChatsRoom extends AppCompatActivity {
     private ContactsListAdapter.RecyclerViewListener listener;
-
-    private  JSONArray str;
-    private String UserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +39,7 @@ public class ChatContacts extends AppCompatActivity {
             String value = extras.getString("User");
             try {
                 JSONObject obj = new JSONObject(value);
-                str =  obj.getJSONArray("contacts");
-                UserID = obj.getString("id").toString();
+                JSONArray str =  obj.getJSONArray("contacts");
 
                 if (str != null) {
                     for(int i = 0; i < str.length(); i++) {
@@ -75,10 +71,10 @@ public class ChatContacts extends AppCompatActivity {
         listener = new ContactsListAdapter.RecyclerViewListener() {
             @Override
             public void onClick(View v, int position) {
-                Log.d("here", ""+position);
-                //Intent intent = new Intent(getApplicationContext() , MainActivity.class);
-                //intent.putextra
-                //startActivity(intent);
+                //Log.d("here", ""+position);
+                // Intent intent = new Intent(getApplicationContext() , MainActivity.class);
+                // intent.putextra
+                // startActivity(intent);
             }
         };
     }

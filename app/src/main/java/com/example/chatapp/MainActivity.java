@@ -43,11 +43,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 LoginAPI loginAPI = new LoginAPI(context);
-               int ret = loginAPI.getLogin(userName.getText().toString(), password.getText().toString());
-
-                Log.d("lols", "ret = " + ret);
-                //Intent intent = new Intent(getApplicationContext(), ChatContacts.class);
-                //startActivity(intent);
+                loginAPI.getLogin(userName.getText().toString(), password.getText().toString());
             }
         });
 
