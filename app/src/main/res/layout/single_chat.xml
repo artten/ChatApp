@@ -9,6 +9,13 @@
     android:background="@color/design_default_color_on_primary"
 
     tools:context=".SingleChat">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_marginBottom="24sp"
+        android:background="@color/light_green"
+        app:layout_constraintBottom_toTopOf="@id/framelayoutSend"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/backImg"
@@ -39,12 +46,7 @@
         app:layout_constraintTop_toTopOf="@id/backImg" />
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0sp"
-        android:layout_marginBottom="24sp"
-        app:layout_constraintBottom_toTopOf="@id/framelayoutSend"
-        app:layout_constraintTop_toTopOf="parent"/>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRecyclerView"
@@ -63,6 +65,7 @@
         android:id="@+id/framelayoutSend"
         android:layout_width="45sp"
         android:layout_height="45sp"
+        android:layout_marginBottom="6sp"
         android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
