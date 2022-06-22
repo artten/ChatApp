@@ -21,7 +21,7 @@
         app:layout_constraintVertical_bias="0.110000014">
 
         <EditText
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/regId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -31,7 +31,7 @@
             android:minHeight="48dp" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName3"
+            android:id="@+id/regNickname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -41,7 +41,7 @@
             android:minHeight="48dp" />
 
         <EditText
-            android:id="@+id/editTextTextPassword2"
+            android:id="@+id/regPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -51,7 +51,7 @@
             android:minHeight="48dp" />
 
         <EditText
-            android:id="@+id/editTextTextPassword3"
+            android:id="@+id/regPasswordRe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
