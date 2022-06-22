@@ -13,7 +13,7 @@
         android:padding="18sp"
         android:textColor="@color/black"
         android:textSize="8sp"
-        app:layout_constraintStart_toEndOf=""
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.6"
         />

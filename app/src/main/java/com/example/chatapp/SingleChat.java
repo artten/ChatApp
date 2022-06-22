@@ -13,11 +13,13 @@ public class SingleChat extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_chat);
-
+/*
         RecyclerView chatRecyclerView = findViewById(R.id.chatRecyclerView);
         final MessagePostAdapter adapter = new MessagePostAdapter(this);
         chatRecyclerView.setAdapter(adapter);
         chatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
+ */
     }
 }
