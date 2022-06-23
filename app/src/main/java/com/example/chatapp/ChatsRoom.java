@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Date;
 import java.time.*;
+import java.util.regex.Pattern;
 
 public class ChatsRoom extends AppCompatActivity {
     private ContactsListAdapter.RecyclerViewListener listener;
@@ -49,6 +50,15 @@ public class ChatsRoom extends AppCompatActivity {
         UserID = extras.getString("Owner");
         contacts = extras.getString("Contacts");
 
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(value);
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
         final MessagesListAdapter adapter = new MessagesListAdapter(this, UserID); // need to get userID before
@@ -88,24 +98,34 @@ public class ChatsRoom extends AppCompatActivity {
         if (extras != null) {
 
             try {
+                String value2 = extras.getString("Messages");
+                obj = new JSONObject(value);
+               // JSONArray str =  new JSONArray(value2);
 
-                JSONArray str =  obj.getJSONArray("Messages");
 
 
+                if (value2 != null) {
 
-
-                if (str != null) {
-                    for(int i = 0; i < str.length(); i++) {
-                        //Log.d("lol",);
-                        if (str.getJSONObject(i).getBoolean("sent") == true) {
-                            messagePosts.add(new MessagePost(str.getJSONObject(i).getInt("id"),
-                                    UserID, contact, str.getJSONObject(i).getString("content"), str.getJSONObject(i).getString("created")));
+                    String[] mes = value2.split(Pattern.quote("}"));
+                    for(int i = 0; i < mes.length - 1 ; i++) {
+                        if(mes[i].split("sent=")[1].equals("true")){
+                            int id = Integer.parseInt(mes[i].split("id=")[1].split(",")[0].split(Pattern.quote("."))[0]);
+                            String content =  mes[i].split("content=")[1].split(",")[0];
+                            String created = mes[i].split("created=")[1].split(",")[0];
+                            messagePosts.add(new MessagePost(id,
+                                    UserID,
+                                    contact,
+                                    content,
+                                    created
+                                    ));
                         }
                         else {
-                            messagePosts.add(new MessagePost(str.getJSONObject(i).getInt("id"),
-                                    contact , UserID, str.getJSONObject(i).getString("content"), str.getJSONObject(i).getString("created")));
+                            messagePosts.add(new MessagePost(Integer.parseInt(mes[i].split("id=")[1].split(",")[0].split(Pattern.quote("."))[0]),
+                                    contact,
+                                    UserID,
+                                    mes[i].split("content=")[1].split(",")[0],
+                                    mes[i].split("created=")[1].split(",")[0]));
                         }
-
                     }
                 }
                 else {
