@@ -45,17 +45,10 @@ public class ChatsRoom extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         String value = extras.getString("User");
+        contact = extras.getString("Contact");
+        UserID = extras.getString("Owner");
+        contacts = extras.getString("Contacts");
 
-
-        JSONObject obj = null;
-        try {
-            obj = new JSONObject(value);
-            UserID = obj.getString("Owner").toString();
-            contact = obj.getString("Contact").toString();
-            contacts = obj.getString("Contacts").toString();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
 
         final MessagesListAdapter adapter = new MessagesListAdapter(this, UserID); // need to get userID before
@@ -97,6 +90,7 @@ public class ChatsRoom extends AppCompatActivity {
             try {
 
                 JSONArray str =  obj.getJSONArray("Messages");
+
 
 
 
