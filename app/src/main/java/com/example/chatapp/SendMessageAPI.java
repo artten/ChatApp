@@ -11,6 +11,9 @@ import com.example.chatapp.MyApp;
 import com.example.chatapp.R;
 import com.example.chatapp.WebServiceAPI;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,17 +27,21 @@ public class SendMessageAPI extends AppCompatActivity {
     private Context context;
     public SendMessageAPI(Context context) {
         this.context = context;
-        retrofit = new Retrofit.Builder()
-                .baseUrl(MyApp.context.getString(R.string.BaseURL))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        webServiceAPI = retrofit.create(WebServiceAPI.class);
+        webServiceAPI = SingletonWebApi.getWebServiceAPI();
 
 
     }
 
     public void postMessage(String id, String message) {
-        Call<Object> call = webServiceAPI.postMessage(id, message);
+        String temp = "{\"content\":" +message+"}";
+        JSONObject mes = null;
+        try {
+            mes = new JSONObject(temp);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Call<Object> call = webServiceAPI.postMessage(id, mes);
+        //Call<Object> call = webServiceAPI.postMessagez(message);
         call.enqueue(new Callback<Object>() {
 
                          @Override

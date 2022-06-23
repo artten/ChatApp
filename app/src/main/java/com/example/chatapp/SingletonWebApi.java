@@ -16,7 +16,7 @@ public class SingletonWebApi {
     private Retrofit retrofit;
 
 
-    public SingletonWebApi() {
+    private SingletonWebApi() {
         if(webServiceAPI == null){
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

@@ -1,5 +1,7 @@
 package com.example.chatapp;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -20,7 +22,10 @@ public interface WebServiceAPI {
     Call<Object> postRegister(@Body RegisterInfo registerInfo);
 
     @POST("api/contacts/{id1}/messages")
-    Call<Object> postMessage(@Path("id1") String id1, @Body String message);
+    Call<Object> postMessage(@Path("id1") String id1, @Body JSONObject content);
+
+    @POST("api/contacts/z/messages")
+    Call<Object> postMessagez( @Body JSONObject content);
 
     @GET("api/contacts/{id1}/messages")
     Call<Object> GetMessages(@Path("id1") String id1);
