@@ -35,6 +35,7 @@ public class ChatsRoom extends AppCompatActivity {
     private String contact;
     private String UserID;
     private JSONArray str;
+    private String contacts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class ChatsRoom extends AppCompatActivity {
             obj = new JSONObject(value);
             UserID = obj.getString("Owner").toString();
             contact = obj.getString("Contact").toString();
+            contacts = obj.getString("Contacts").toString();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -65,15 +67,13 @@ public class ChatsRoom extends AppCompatActivity {
         TextView contactName = findViewById(R.id.contactName);
         EditText chatBox = findViewById(R.id.messageBox);
         LocalDateTime dateTime = LocalDateTime.now();
-        contactName.setText("receiverID");
-
-
+        contactName.setText(contact);
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                MessagePost m = new MessagePost(0, UserID, "receiverId", chatBox.getText().toString(), dateTime.toString());
+                MessagePost m = new MessagePost(0, UserID, contact, chatBox.getText().toString(), dateTime.toString());
                 messagePosts.add(m);
 
             }
@@ -84,7 +84,7 @@ public class ChatsRoom extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ChatContacts.class);
                 intent.putExtra("User", value);
-                intent.putExtra("Contact", contact);
+                intent.putExtra("Contacts", contacts);
                 startActivity(intent);
                 finish();
             }
