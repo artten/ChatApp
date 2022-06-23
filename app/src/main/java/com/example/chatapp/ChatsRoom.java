@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,9 +22,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Date;
+import java.time.*;
 
 public class ChatsRoom extends AppCompatActivity {
     private ContactsListAdapter.RecyclerViewListener listener;
@@ -33,19 +41,64 @@ public class ChatsRoom extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_chat);
         RecyclerView messageList = (RecyclerView) findViewById(R.id.chatRecyclerView);
+
+        Bundle extras = getIntent().getExtras();
+        String value = extras.getString("User");
+
+
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(value);
+            UserID = obj.getString("Owner").toString();
+            contact = obj.getString("Contact").toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
         final MessagesListAdapter adapter = new MessagesListAdapter(this, UserID); // need to get userID before
         messageList.setAdapter(adapter);
         messageList.setLayoutManager(new LinearLayoutManager(this));
         List<MessagePost> messagePosts = new ArrayList<>();
+        FrameLayout send = findViewById(R.id.framelayoutSend);
+        AppCompatImageView back = findViewById(R.id.backImg);
+        TextView contactName = findViewById(R.id.contactName);
+        EditText chatBox = findViewById(R.id.messageBox);
+        LocalDateTime dateTime = LocalDateTime.now();
+        contactName.setText("receiverID");
 
-        Bundle extras = getIntent().getExtras();
+
+
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                MessagePost m = new MessagePost(0, UserID, "receiverId", chatBox.getText().toString(), dateTime.toString());
+                messagePosts.add(m);
+
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ChatContacts.class);
+                intent.putExtra("User", value);
+                intent.putExtra("Contact", contact);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
+
         if (extras != null) {
-            String value = extras.getString("User");
+
             try {
-                JSONObject obj = new JSONObject(value);
-                JSONArray str =  obj.getJSONArray("messages");
-                contact = obj.getString("contact").toString();
-                UserID = obj.getString("owner").toString();
+
+                JSONArray str =  obj.getJSONArray("Messages");
+
+
 
                 if (str != null) {
                     for(int i = 0; i < str.length(); i++) {

@@ -8,7 +8,7 @@
     android:animateLayoutChanges="true"
     android:background="@color/design_default_color_on_primary"
 
-    tools:context=".SingleChat">
+    tools:context=".ChatsRoom">
     <View
         android:layout_width="match_parent"
         android:layout_height="0sp"
