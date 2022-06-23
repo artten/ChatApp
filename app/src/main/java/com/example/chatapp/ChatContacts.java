@@ -28,6 +28,8 @@ public class ChatContacts extends AppCompatActivity {
     private  JSONArray str;
     private String UserID;
     private String value;
+    private String value2;
+    private  ArrayList<String> contactsID = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,17 +45,26 @@ public class ChatContacts extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
            value = extras.getString("User");
+           value2 = extras.getString("Contacts");
             try {
                 JSONObject obj = new JSONObject(value);
-                str =  obj.getJSONArray("contacts");
+
+                //str = new JSONArray(obj2);
+
                 UserID = obj.getString("id").toString();
 
-                if (str != null) {
-                    for(int i = 0; i < str.length(); i++) {
-                        //Log.d("lol",);
-                        contacts.add(new Contact(str.getJSONObject(i).getString("id"), str.getJSONObject(i).getString("name")));
+                if (value2 != null) {
+                    String[] separated = value2.split("id=");
+                    for (int i =1 ; i < separated.length; i++){
+
+                        String id = separated[i].split(",")[0];
+                        contactsID.add( id);
+                        String name = separated[i].split(",")[1].split("name=")[1];
+                        contacts.add(new Contact(id, name));
                     }
                 }
+
+
                 else {
                     contacts.add(new Contact("Artiom", "artten"));
                     contacts.add(new Contact("Saar", "sarr"));
@@ -79,14 +90,10 @@ public class ChatContacts extends AppCompatActivity {
             @Override
             public void onClick(View v, int position) {
                 MessagesAPI messagesAPI = new MessagesAPI(context);
-                try {
-                    messagesAPI.getMessages(UserID, str.getJSONObject(position).getString("id").toString(), value);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                //Intent intent = new Intent(getApplicationContext() , MainActivity.class);
+                messagesAPI.getMessages(UserID, contactsID.get(position), value, value2);
+                Intent intent = new Intent(getApplicationContext() , MainActivity.class);
                 //intent.putextra
-                //startActivity(intent);
+                startActivity(intent);
             }
         };
     }

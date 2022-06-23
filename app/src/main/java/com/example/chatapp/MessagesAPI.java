@@ -30,7 +30,7 @@ public class MessagesAPI extends AppCompatActivity {
 
     }
 
-    public void getMessages(String id1, String id2, String user) {
+    public void getMessages(String id1, String id2, String user, String contacts) {
         Call<Object> call = webServiceAPI.GetMessages(id1, id2);
         call.enqueue(new Callback<Object>() {
 
@@ -43,6 +43,7 @@ public class MessagesAPI extends AppCompatActivity {
                                  intent.putExtra("Contact", id2);
                                  intent.putExtra("Owner", id1);
                                  intent.putExtra("User", user);
+                                 intent.putExtra("Contacts", contacts);
                                  context.startActivity(intent);
 
                              }

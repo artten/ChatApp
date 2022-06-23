@@ -29,6 +29,11 @@ android {
 }
 
 dependencies {
+    api(platform("com.squareup.okhttp3:okhttp-bom:4.8.0"))
+    api("com.squareup.okhttp3:okhttp")              // No version!
+    api("com.squareup.okhttp3:logging-interceptor") // No version!
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.2.0'
     implementation 'com.google.firebase:firebase-messaging:20.1.0'
     implementation 'androidx.preference:preference:1.2.0'
     def room_version = "2.4.2"

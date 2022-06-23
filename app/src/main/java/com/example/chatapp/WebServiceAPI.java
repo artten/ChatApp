@@ -13,6 +13,9 @@ public interface WebServiceAPI {
     @GET("api/Login/{id}/{password}")
     Call<Object> getLogin(@Path("id") String id, @Path("password") String password);
 
+    @GET("api/Contacts")
+    Call<Object> getContacts();
+
     @POST("api/Register")
     Call<Object> postRegister(@Body String id, @Body String password, @Body String Nickname);
 
