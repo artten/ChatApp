@@ -19,6 +19,9 @@ public interface WebServiceAPI {
     @POST("api/Register")
     Call<Object> postRegister(@Body RegisterInfo registerInfo);
 
+    @POST("api/contacts/{id1}/messages")
+    Call<Object> postMessage(@Path("id1") String id1, @Body String message);
+
     @GET("api/contacts/{id1}/messages")
     Call<Object> GetMessages(@Path("id1") String id1);
 
