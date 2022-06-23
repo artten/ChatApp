@@ -33,7 +33,7 @@ public class SendMessageAPI extends AppCompatActivity {
 
     }
 
-    public void postRegister(String id, String message, String Nickname) {
+    public void postMessage(String id, String message) {
         Call<Object> call = webServiceAPI.postMessage(id, message);
         call.enqueue(new Callback<Object>() {
 
@@ -55,4 +55,4 @@ public class SendMessageAPI extends AppCompatActivity {
 
     }
 }
-}
+

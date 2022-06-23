@@ -1,5 +1,6 @@
 package com.example.chatapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +38,7 @@ public class ChatsRoom extends AppCompatActivity {
     private String UserID;
     private JSONArray str;
     private String contacts;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,14 +73,16 @@ public class ChatsRoom extends AppCompatActivity {
         EditText chatBox = findViewById(R.id.messageBox);
         LocalDateTime dateTime = LocalDateTime.now();
         contactName.setText(contact);
+        context = this;
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                SendMessageAPI sendMessageAPI = new SendMessageAPI(context);
+                sendMessageAPI.postMessage(contact, chatBox.getText().toString());
                 MessagePost m = new MessagePost(0, UserID, contact, chatBox.getText().toString(), dateTime.toString());
                 messagePosts.add(m);
-
+                chatBox.setText("");
             }
         });
 
