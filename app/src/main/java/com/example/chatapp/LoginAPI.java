@@ -40,8 +40,8 @@ public class LoginAPI extends AppCompatActivity {
                              if(response.code() == 200) {
 
                                  Intent intent = new Intent(context.getApplicationContext(), ChatContacts.class);
-                                 //intent.putExtra("User", response.body().toString());
-                                 intent.putExtra("User", "{\"id\":\"e\", \"password\":\"e\",\"contacts\":[{\"id\":\"1\",\"name\":\"1Name\"},{\"id\":\"2\",\"name\":\"2name\"}]}");
+                                 intent.putExtra("User", response.body().toString());
+                                 //intent.putExtra("User", "{\"id\":\"e\", \"password\":\"e\",\"contacts\":[{\"id\":\"1\",\"name\":\"1Name\"},{\"id\":\"2\",\"name\":\"2name\"}]}");
                                  //intent.putExtra("User", "{\"foos\" : [{\"prop1\":\"value1\",\"prop2\":\"value2\"}, {\"prop1\":\"value3\",\"prop2\":\"value4\"}]}"
                                  context.startActivity(intent);
 
