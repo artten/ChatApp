@@ -31,23 +31,7 @@ public class LoginAPI extends AppCompatActivity {
     public  LoginAPI(Context context) {
         this.context = context;
 
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-        CookieHandler cookieHandler = new CookieManager();
-        OkHttpClient client = new OkHttpClient.Builder().addNetworkInterceptor(interceptor)
-                .cookieJar(new JavaNetCookieJar(cookieHandler))
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .build();
-
-        retrofit = new Retrofit.Builder()
-                .baseUrl(MyApp.context.getString(R.string.BaseURL))
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build();
-        webServiceAPI = retrofit.create(WebServiceAPI.class);
+        webServiceAPI = SingletonWebApi.getWebServiceAPI();
 
 
     }
@@ -102,6 +86,47 @@ public class LoginAPI extends AppCompatActivity {
                              Log.d("hello 2","response.toString()");
                          }
         }
+        );
+
+
+    }
+
+    public void getMessages(String id1, String id2, String user, String contacts) {
+        Call<Object> call = webServiceAPI.GetMessages(id1);
+        call.enqueue(new Callback<Object>() {
+
+                         @Override
+                         public void onResponse(Call<Object> call, Response<Object> response) {
+                             if(response.code()/100 == 2) {
+
+                                 Intent intent = new Intent(context.getApplicationContext(), ChatsRoom.class);
+                                 intent.putExtra("Messages", response.body().toString());
+                                 intent.putExtra("Contact", id2);
+                                 intent.putExtra("Owner", id1);
+                                 intent.putExtra("User", user);
+                                 intent.putExtra("Contacts", contacts);
+                                 context.startActivity(intent);
+
+                             }
+
+                             if(response.code()/100 == 4) {
+
+                                 Intent intent = new Intent(context.getApplicationContext(), ChatsRoom.class);
+                                 intent.putExtra("Messages", response.body().toString());
+                                 intent.putExtra("Contact", id2);
+                                 intent.putExtra("Owner", id1);
+                                 intent.putExtra("User", user);
+                                 intent.putExtra("Contacts", contacts);
+                                 context.startActivity(intent);
+
+                             }
+
+                         }
+
+                         @Override
+                         public void onFailure(Call<Object> call, Throwable t) {
+                         }
+                     }
         );
 
 

@@ -43,27 +43,31 @@ public class Register extends AppCompatActivity {
         reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RegisterAPI registerAPI = new RegisterAPI(context);
-                int ret2 = registerAPI.postRegister(userName.getText().toString(),
-                        password.getText().toString(), nickName.getText().toString());
+                if(checkRegistration(userName, nickName, password, retPass)) {
+                    RegisterAPI registerAPI = new RegisterAPI(context);
+                    registerAPI.postRegister(userName.getText().toString(),
+                            password.getText().toString(), nickName.getText().toString());
 
-                Log.d("lols", "ret = " + ret2);
+                }
+
+
+                //Log.d("lols", "ret = " + ret2);
                 //Intent intent = new Intent(getApplicationContext(), ChatContacts.class);
                 //startActivity(intent);
             }
         });
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(checkRegistration(userName, nickName, password, retPass)) {
-                    Post post = new Post(1, userName.getText().toString(), nickName.getText()
-                            .toString(), password.getText().toString(), " ");
-                    postDao.insert(post);
-                    Intent intent = new Intent(getApplicationContext(), ChatContacts.class);
-                    startActivity(intent);
-                }
-            }
-        });
+//        register.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(checkRegistration(userName, nickName, password, retPass)) {
+//                    Post post = new Post(1, userName.getText().toString(), nickName.getText()
+//                            .toString(), password.getText().toString(), " ");
+//                    postDao.insert(post);
+//                    Intent intent = new Intent(getApplicationContext(), ChatContacts.class);
+//                    startActivity(intent);
+//                }
+//            }
+//        });
     }
 
     protected boolean checkRegistration(EditText userName, EditText nickName, EditText password, EditText retPass) {

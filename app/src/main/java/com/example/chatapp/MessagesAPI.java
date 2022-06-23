@@ -21,17 +21,12 @@ public class MessagesAPI extends AppCompatActivity {
     private Context context;
     public  MessagesAPI(Context context) {
         this.context = context;
-        retrofit = new Retrofit.Builder()
-                .baseUrl(MyApp.context.getString(R.string.BaseURL))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        webServiceAPI = retrofit.create(WebServiceAPI.class);
-
+        webServiceAPI = SingletonWebApi.getWebServiceAPI();
 
     }
 
     public void getMessages(String id1, String id2, String user, String contacts) {
-        Call<Object> call = webServiceAPI.GetMessages(id1, id2);
+        Call<Object> call = webServiceAPI.GetMessages(id2);
         call.enqueue(new Callback<Object>() {
 
                          @Override

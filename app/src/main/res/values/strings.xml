@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">ChatApp</string>
-    <string name="BaseURL">http://10.100.102.7:5102/</string>
+    <string name="BaseURL">http://192.168.36.58:5102/</string>
 </resources>

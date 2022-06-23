@@ -1,7 +1,8 @@
 package com.example.chatapp;
 
-import static com.example.chatapp.MyApp.context;
+//import static com.example.chatapp.MyApp.context;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +30,7 @@ public class ChatContacts extends AppCompatActivity {
     private String UserID;
     private String value;
     private String value2;
+    private Context context;
     private  ArrayList<String> contactsID = new ArrayList<String>();
 
     @Override
@@ -36,6 +38,7 @@ public class ChatContacts extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.constact_list);
         setOnClickListner();
+        context = this;
         RecyclerView listContacts = (RecyclerView) findViewById(R.id.lastContacts);
         final ContactsListAdapter adapter = new ContactsListAdapter(this,listener);
         listContacts.setAdapter(adapter);
@@ -91,9 +94,9 @@ public class ChatContacts extends AppCompatActivity {
             public void onClick(View v, int position) {
                 MessagesAPI messagesAPI = new MessagesAPI(context);
                 messagesAPI.getMessages(UserID, contactsID.get(position), value, value2);
-                Intent intent = new Intent(getApplicationContext() , MainActivity.class);
+                //Intent intent = new Intent(getApplicationContext() , MainActivity.class);
                 //intent.putextra
-                startActivity(intent);
+                //startActivity(intent);
             }
         };
     }
